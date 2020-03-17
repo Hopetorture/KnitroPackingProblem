@@ -60,7 +60,7 @@ public:
 		ProblemConfiguratoin shapes = cfg.deserialize(i_x);
 		for (auto &shape : shapes) 
 		{
-			shape->apply_shift();
+			shape->apply_shift()
 		}
 		
 		double insideContainerConstraint = 1;

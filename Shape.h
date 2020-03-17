@@ -43,13 +43,27 @@ public:
 	virtual bool isShapeInPlane(double x, double y) const = 0;		
 	virtual double area() const = 0;
 	virtual void apply_shift() = 0;
+	virtual bool collides(std::shared_ptr<Shape> &other) const
+	{
+		auto other_circle = other->boundingCircle();
+		auto this_circle = this->boundingCircle();
+		double distance = sqrt(pow(other_circle.x - this_circle.x, 2)
+			+ pow(other_circle.y - this_circle.y, 2));
+		if (distance < (this_circle.r + other_circle.r)) // collision possible
+		{
+			// Exact collision detection should be added
+			return exactCollisionDetection(other);
+		}
+		else
+		{
+			return false;
+		}
+	}
+
 
 	double x_shift, y_shift;
 
 private:
-	virtual bool exactCollisionDetection(std::shared_ptr<Shape> &other)
-	{
-		return true; // returns true because it only gets called when bounding circles intersect already
-	}
+	virtual bool exactCollisionDetection(std::shared_ptr<Shape> &other) const = 0;
 
 };

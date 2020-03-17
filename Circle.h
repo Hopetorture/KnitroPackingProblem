@@ -49,21 +49,7 @@ public:
 		else
 			return false;
 	}
-	virtual bool collides(std::shared_ptr<Shape> &other) const override
-	{
-		auto other_circle = other->boundingCircle();
-		double distance = sqrt(pow(other_circle.x - this->shifted_pos.first, 2) 
-							 + pow(other_circle.y - this->shifted_pos.second, 2));
-		if (distance < (this->r + other_circle.r)) // collision possible
-		{
-			// Exact collision detection should be added
-			return true;
-		}
-		else 
-		{
-			return false;
-		}
-	}
+	
 
 	virtual double area() const 
 	{
@@ -79,5 +65,10 @@ private:
 	Radius r;
 	Center pos;
 	Center shifted_pos;
+
+	virtual bool exactCollisionDetection(std::shared_ptr<Shape> &other) const override 
+	{
+		return true;
+	}
 };
 
